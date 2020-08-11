@@ -1,0 +1,2 @@
+# ansibleAzure
+Ansible Azure repository
