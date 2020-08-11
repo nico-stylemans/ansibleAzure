@@ -1,0 +1,67 @@
+---
+- hosts: localhost
+  connection: local
+  vars:
+    resource_group: hybrid-rg
+    location: westeurope
+    webapp: nsthybridwebapp
+    webappplan: nsthybridwebappplan
+    mysqlserver_name: nstmysqlserveransible
+    mysqldb_name: nstmysqldbansible
+    admin_username: mysqladmin
+    admin_password: Testpasswordxyz12!
+  tasks:
+    - name: Create Resource Group
+      azure_rm_resourcegroup:
+        name: "{{ resource_group }}"
+        location: "{{ location }}"
+      register: rg
+    - debug:
+        var: rg
+
+    - name: Create Webapp and Plan
+      azure_rm_webapp:
+        resource_group: "{{ resource_group }}"
+        name: "{{ webapp }}"
+        plan:
+          resource_group: "{{ resource_group }}"
+          name: "{{ webappplan }}"
+          sku: F1
+          is_linux: false
+          frameworks:
+            - name: dotnetcore
+              version: 3.1
+      register: webapp2
+    - debug:
+        var: webapp2
+
+    - name: Create MySQL Server
+      azure_rm_mysqlserver:
+        resource_group: "{{ resource_group }}"
+        name: "{{ mysqlserver_name }}"
+        sku:
+          name: B_Gen5_1
+          tier: Basic
+        location: "{{ location }}"
+        version: 5.7
+        enforce_ssl: True
+        admin_username: "{{ admin_username }}"
+        admin_password: "{{ admin_password }}"
+        storage_mb: 51200
+    - name: Create instance of MySQL Database
+      azure_rm_mysqldatabase:
+        resource_group: "{{ resource_group }}"
+        server_name: "{{ mysqlserver_name }}"
+        name: "{{ mysqldb_name }}"
+    - name: Open firewall to access MySQL Server from outside
+      azure_rm_mysqlfirewallrule:
+        resource_group: "{{ resource_group }}"
+        server_name: "{{ mysqlserver_name }}"
+        name: "{{ mysqldb_name }}"
+    - name: Open firewall to access MySQL Server from outside
+      azure_rm_mysqlfirewallrule:
+        resource_group: "{{ resource_group }}"
+        server_name: "{{ mysqlserver_name }}"
+        name: AllowAll
+        start_ip_address: "0.0.0.0"
+        end_ip_address: "255.255.255.255"
