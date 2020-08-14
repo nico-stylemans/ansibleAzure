@@ -52,3 +52,6 @@
         resource_group: "{{ resource_group }}"
         server_name: "{{ mysqlserver_name }}"
         name: "{{ mysqldb_name }}"
+    - name: Create Mysql Firewall Rules
+      azure_rm_mysqlfirewallrule:
+      
