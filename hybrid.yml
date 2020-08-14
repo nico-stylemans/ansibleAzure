@@ -61,6 +61,4 @@
       azure_rm_mysqlfirewallrule:
         resource_group: "{{ resource_group }}"
         server_name: "{{ mysqlserver_name }}"
-        name: AllowAll
-        start_ip_address: 0.0.0.0
-        
+        name: AllowAll      
