@@ -58,4 +58,5 @@
         resource_group: "{{ resource_group }}"
         server_name: "{{ mysqlserver_name  }}"
         start_ip_address: "0.0.0.0"
+        end_ip_address: "255.255.255.255"
       
