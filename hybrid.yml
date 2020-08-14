@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: nstlnxans.westeurope.cloudapp.azure.com
   vars:
     resource_group: hybrid-rg
     location: westeurope
