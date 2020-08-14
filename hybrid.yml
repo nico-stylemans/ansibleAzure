@@ -32,7 +32,7 @@
               version: 3.1
       register: webapp2
     - debug:
-        var: webapp2
+        var: webapp2.outbound_ip_addresses
 
     - name: Create MySQL Server
       azure_rm_mysqlserver:
