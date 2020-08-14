@@ -52,13 +52,3 @@
         resource_group: "{{ resource_group }}"
         server_name: "{{ mysqlserver_name }}"
         name: "{{ mysqldb_name }}"
-    - name: Open firewall to access MySQL Server from outside
-      azure_rm_mysqlfirewallrule:
-        resource_group: "{{ resource_group }}"
-        server_name: "{{ mysqlserver_name }}"
-        name: "{{ mysqldb_name }}"
-    - name: Open firewall to access MySQL Server from outside
-      azure_rm_mysqlfirewallrule:
-        resource_group: "{{ resource_group }}"
-        server_name: "{{ mysqlserver_name }}"
-        name: AllowAll      
