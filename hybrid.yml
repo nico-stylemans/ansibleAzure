@@ -32,7 +32,14 @@
               version: 3.1
       register: webapp2
     - debug:
-        var: webapp2.outbound_ip_addresses
+        var: webapp2
+    - name: Get WebApp INfo
+      azure_rm_webapp_info:
+        resource_group: "{{ resource_group }}"
+        name: "{{ webapp }}"
+      register: webapp3
+    - debug:
+        msg: webapp3.outbound_ip_addresses
 
     - name: Create MySQL Server
       azure_rm_mysqlserver:
