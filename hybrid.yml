@@ -63,5 +63,4 @@
         server_name: "{{ mysqlserver_name }}"
         name: AllowAll
         start_ip_address: 0.0.0.0
-        end_ip_address: 255.255.255.255
         
