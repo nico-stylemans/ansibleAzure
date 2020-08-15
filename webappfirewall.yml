@@ -17,6 +17,10 @@
       register: webapp3
     - debug:
         msg: "{{ webapp3.webapps[0].outbound_ip_addresses }}"
+    - set_fact:
+        ips: "{{ webapp3.webapps[0].outbound_ip_addresses.split(',') }}"
+    - debug:
+        msg: "{{ ips.0 }}-{{ ips.1 }}-{{ ips.2 }}-{{ ips.3 }}"
     - name: Create Mysql Firewall Rules
       azure_rm_mysqlfirewallrule:
         name: "AllowAll"
