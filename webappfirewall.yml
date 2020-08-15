@@ -16,7 +16,8 @@
         name: "{{ webapp }}"
       register: webapp3
     - debug:
-        var: webapp3.webapps.outbound_ip_addresses
+        outip: webapp3.webapps[0].outbound_ip_addresses
+        msg: outip
     - name: Create Mysql Firewall Rules
       azure_rm_mysqlfirewallrule:
         name: "AllowAll"
