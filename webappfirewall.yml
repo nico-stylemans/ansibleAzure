@@ -30,7 +30,7 @@
         end_ip_address: "255.255.255.255"
     - name: Create Webapp Firewall Rules
       azure_rm_mysqlfirewallrule:
-        name: "Allow-{{ item }}"
+        name: "Allow + {{ item }}"
         resource_group: "{{ resource_group }}"
         server_name: "{{ mysqlserver_name  }}"
         start_ip_address: "{{ item }}"
