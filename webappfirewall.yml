@@ -1,0 +1,26 @@
+---
+- hosts: nstlnxans.westeurope.cloudapp.azure.com
+  vars:
+    resource_group: hybrid-rg
+    location: westeurope
+    webapp: nsthybridwebapp
+    webappplan: nsthybridwebappplan
+    mysqlserver_name: nstmysqlserveransible
+    mysqldb_name: nstmysqldbansible
+    admin_username: mysqladmin
+    admin_password: Testpasswordxyz12!
+  tasks:
+    - name: Get WebApp INfo
+      azure_rm_webapp_info:
+        resource_group: "{{ resource_group }}"
+        name: "{{ webapp }}"
+      register: webapp3
+    - debug:
+        var: webapp3.webapps.outbound_ip_addresses
+    - name: Create Mysql Firewall Rules
+      azure_rm_mysqlfirewallrule:
+        name: "AllowAll"
+        resource_group: "{{ resource_group }}"
+        server_name: "{{ mysqlserver_name  }}"
+        start_ip_address: "0.0.0.0"
+        end_ip_address: "255.255.255.255"
