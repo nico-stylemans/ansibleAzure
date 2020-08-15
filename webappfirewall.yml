@@ -35,4 +35,4 @@
         server_name: "{{ mysqlserver_name  }}"
         start_ip_address: "{{ item }}"
         end_ip_address: "{{ item }}"
-      loop: "{{ webapp3.webapps[0].outbound_ip_addresses }}"
+      loop: "{{ ips }}"
