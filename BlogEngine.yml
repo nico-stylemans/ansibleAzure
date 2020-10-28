@@ -5,8 +5,8 @@
     location: westeurope
     webapp: nstblogengine
     webappplan: nstblogengineappplan
-    mysqlserver_name: nstmysqlserverblog
-    mysqldb_name: nstblogeninge
+    sqlserver_name: nstmysqlserverblog
+    sqldb_name: nstblogeninge
     admin_username: mysqladmin
     admin_password: Testpasswordxyz12!
   tasks:
@@ -33,24 +33,19 @@
       register: webapp2
     - debug:
         var: webapp2
-    - name: Create MySQL Server
+    - name: Create SQL Server
       azure_rm_mysqlserver:
         resource_group: "{{ resource_group }}"
-        name: "{{ mysqlserver_name }}"
-        sku:
-          name: B_Gen5_1
-          tier: Basic
+        name: "{{ sqlserver_name }}"
         location: "{{ location }}"
-        version: "5.7"
-        enforce_ssl: True
         admin_username: "{{ admin_username }}"
         admin_password: "{{ admin_password }}"
-        storage_mb: 51200
     - name: Create instance of MySQL Database
-      azure_rm_mysqldatabase:
+      azure_rm_sqldatabase:
         resource_group: "{{ resource_group }}"
-        server_name: "{{ mysqlserver_name }}"
-        name: "{{ mysqldb_name }}"
+        server_name: "{{ sqlserver_name }}"
+        name: "{{ sqldb_name }}"
+        location: "{{ location }}"
     - name: Get WebApp INfo
       azure_rm_webapp_info:
         resource_group: "{{ resource_group }}"
