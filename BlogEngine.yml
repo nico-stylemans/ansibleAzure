@@ -1,12 +1,12 @@
 ---
 - hosts: nstlnxans.westeurope.cloudapp.azure.com
   vars:
-    resource_group: hybrid-rg
+    resource_group: blogengine-rg
     location: westeurope
-    webapp: nsthybridwebapp
-    webappplan: nsthybridwebappplan
-    mysqlserver_name: nstmysqlserveransible
-    mysqldb_name: nstmysqldbansible
+    webapp: nstblogengine
+    webappplan: nstblogengineappplan
+    mysqlserver_name: nstmysqlserverblog
+    mysqldb_name: nstblogeninge
     admin_username: mysqladmin
     admin_password: Testpasswordxyz12!
   tasks:
@@ -33,14 +33,6 @@
       register: webapp2
     - debug:
         var: webapp2
-    - name: Get WebApp INfo
-      azure_rm_webapp_info:
-        resource_group: "{{ resource_group }}"
-        name: "{{ webapp }}"
-      register: webapp3
-    - debug:
-        var: webapp3.webapps.outbound_ip_addresses
-
     - name: Create MySQL Server
       azure_rm_mysqlserver:
         resource_group: "{{ resource_group }}"
@@ -59,11 +51,25 @@
         resource_group: "{{ resource_group }}"
         server_name: "{{ mysqlserver_name }}"
         name: "{{ mysqldb_name }}"
-    - name: Create Mysql Firewall Rules
+    - name: Get WebApp INfo
+      azure_rm_webapp_info:
+        resource_group: "{{ resource_group }}"
+        name: "{{ webapp }}"
+      register: webapp3
+    - debug:
+        msg: "{{ webapp3.webapps[0].outbound_ip_addresses }}"
+    - set_fact:
+        ips: "{{ webapp3.webapps[0].outbound_ip_addresses.split(',') }}"
+    - debug:
+        msg: "{{ ips.0 }}-{{ ips.1 }}-{{ ips.2 }}-{{ ips.3 }}"
+    - name: Create Webapp Firewall Rules
       azure_rm_mysqlfirewallrule:
-        name: "AllowAll"
+        name: "WebappIp{{ ipindex }}-{{ item | replace('.','') }}"
         resource_group: "{{ resource_group }}"
         server_name: "{{ mysqlserver_name  }}"
-        start_ip_address: "0.0.0.0"
-        end_ip_address: "255.255.255.255"
+        start_ip_address: "{{ item }}"
+        end_ip_address: "{{ item }}"
+      loop: "{{ ips }}"
+      loop_control:
+        index_var: ipindex
       
