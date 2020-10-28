@@ -28,8 +28,8 @@
           sku: F1
           is_linux: false
           frameworks:
-            - name: dotnetcore
-              version: 3.1
+            - name: net_framework
+              version: 4.0
       register: webapp2
     - debug:
         var: webapp2
