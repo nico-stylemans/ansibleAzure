@@ -58,7 +58,7 @@
     - debug:
         msg: "{{ ips.0 }}-{{ ips.1 }}-{{ ips.2 }}-{{ ips.3 }}"
     - name: Create Webapp Firewall Rules
-      azure_rm_mysqlfirewallrule:
+      azure_rm_sqlfirewallrule:
         name: "WebappIp{{ ipindex }}-{{ item | replace('.','') }}"
         resource_group: "{{ resource_group }}"
         server_name: "{{ mysqlserver_name  }}"
