@@ -3,7 +3,7 @@
   tasks:
     - name: Create resource group
       azure_rm_resourcegroup:
-        name: ansibleawx-rg
+        name: ansibleawx-test-rg
         location: westeurope
       register: rg
     - debug:
