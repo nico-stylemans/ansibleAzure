@@ -7,4 +7,4 @@
       azure_rm_resourcegroup:
         name: "{{ resource_group }}"
         force_delete_nonempty: yes
-        start: absent
+        state: absent
