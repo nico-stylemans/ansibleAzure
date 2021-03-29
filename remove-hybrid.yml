@@ -1,0 +1,10 @@
+---
+- hosts: nstlnxans.westeurope.cloudapp.azure.com
+  vars:
+    resource_group: hybrid-rg
+  tasks:
+    - name: Remove Resource Group with force
+      azure_rm_resourcegroup:
+        name: "{{ resource_group }}"
+        force_delete_nonempty: yes
+        start: absent
