@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: nstlnxans.westeurope.cloudapp.azure.com
   tasks:
     - name: Create resource group
       azure_rm_resourcegroup:
