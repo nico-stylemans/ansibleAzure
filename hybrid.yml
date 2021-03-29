@@ -39,7 +39,7 @@
         name: "{{ webapp }}"
       register: webapp3
     - debug:
-        var: webapp3.webapps.outbound_ip_addresses
+        var: webapp3.webapps[0].outbound_ip_addresses
 
     - name: Create MySQL Server
       azure_rm_mysqlserver:
